@@ -9,4 +9,16 @@ package uppgift_3;
  */
 public class Model {
 
+View v = new View();
+
+private void Slump(){
+    
+    
 }
+
+
+
+
+
+}
+
