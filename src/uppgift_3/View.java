@@ -49,11 +49,20 @@ public class View extends JFrame {
             String s = Integer.toString(j);
             Button knapp = new Button(s);
             knapp.putClientProperty("position", positioner.get(j-1));
+            knapp.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    checkButton(e);
+                    vinst();
+                }
+                
+            });
             if(j==15){
              
              sistaKnapp.setBorderPainted(false);
              sistaKnapp.setContentAreaFilled(false);
              sistaKnapp.putClientProperty("position", positioner.get(j));
+             sistaKnapp.setSistaKnapp();
             }
             knappar.add(knapp);
         }
@@ -123,7 +132,42 @@ public class View extends JFrame {
                 System.out.println("Du har Vunnit!");
             }
         }
+        
+            private void checkButton(ActionEvent e) {
+
+            int lidx = 0;
+            int i = 0;
+            for (Button button : knappar) {
+                if (knappar.get(i).getSistaKnapp()) {
+                
+                    lidx = knappar.indexOf(button);
+                }
+                i++;
+            }
+
+            JButton button = (JButton) e.getSource();
+            int bidx = knappar.indexOf(button);
+            if((bidx ==4) ||(bidx ==8)||(bidx ==12)){
+                if ((bidx + 1 == lidx) || (bidx - 4 == lidx) || (bidx + 4 == lidx)) {
+                    Collections.swap(knappar, bidx, lidx);
+                    updateButtons();
+                }
+            }
+            else if((bidx ==3) ||(bidx ==7)||(bidx ==11)){
+                if ((bidx - 1 == lidx) || (bidx - 4 == lidx) || (bidx + 4 == lidx)) {
+                    Collections.swap(knappar, bidx, lidx);
+                    updateButtons();
+                }
+            }
+            else if((bidx - 1 == lidx) || (bidx + 1 == lidx)
+                    || (bidx - 4 == lidx) || (bidx + 4 == lidx)) {
+                Collections.swap(knappar, bidx, lidx);
+                updateButtons();
+            }
+
+
     }
+}
 
 
             
