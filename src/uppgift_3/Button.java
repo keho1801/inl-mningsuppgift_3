@@ -14,4 +14,7 @@ public class Button extends JButton {
     Button(String s){
         this.setText(s);
     }
+    Button(){
+        
+    }
 }

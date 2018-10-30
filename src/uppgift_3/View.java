@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JPanel;
@@ -26,38 +28,44 @@ public class View extends JFrame {
     
    
     JPanel knappPanel = new JPanel();
-    JButton knapp = new JButton("Blanda");
+    JButton blanda = new JButton("Blanda");
     int count = 0;
     
 
     JPanel panel = new JPanel();
     
     ArrayList<Button> knappar = new ArrayList();
-    
+    ArrayList positioner = new ArrayList();
 
     
     
     View(){
+        createPositions();
         add(knappPanel);
-        add(panel);
+        add(panel);Button 
+        sistaKnapp = new Button();
         
         for(int j=1; j<16; j++) {
             String s = Integer.toString(j);
             Button knapp = new Button(s);
+            knapp.putClientProperty("position", positioner.get(j-1));
+            if(j==15){
+             
+             sistaKnapp.setBorderPainted(false);
+             sistaKnapp.setContentAreaFilled(false);
+             sistaKnapp.putClientProperty("position", positioner.get(j));
+            }
             knappar.add(knapp);
         }
-        
-        knapp.addActionListener(new ActionListener(){
+//        Collections.shuffle(knappar);
+        knappar.add(sistaKnapp);
+        vinst();
+        blanda.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                   knapp.setText("blanda");
                     Collections.shuffle(knappar);
-                    for(int i = 0; i < 15; i ++){
-                        Button button = knappar.get(i);
-                        panel.add(button);
-                        count = 1;
-                        panel.repaint();
-                    }
+                    vinst();
+                    updateButtons();
                 }
                        
         });
@@ -70,25 +78,54 @@ public class View extends JFrame {
         this.add(panel, BorderLayout.CENTER);
         
         knappar.get(0).setPreferredSize(new Dimension(100,100));
-        knappPanel.add(knapp);
+        knappPanel.add(blanda);
   
-        Collections.shuffle(knappar);
         
-        for(int i = 0; i < 15; i ++){
-            Button button = knappar.get(i);
-            panel.add(button);
+        for(JButton btn : knappar){
+            panel.add(btn);
         }
-        
-        
-       
+
         setVisible(true);
         pack();
-        setLocation(600,300);
-
+        this.setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
     }
  
-}
+    
+            //ska flyttas till model
+        private void updateButtons() {
+
+            panel.removeAll();
+
+            for (JButton btn : knappar) {
+                panel.add(btn);
+            }
+            
+            panel.validate();
+        }
+        
+        private void createPositions(){
+            for(int i =0; i<4; i++){
+                for(int j=0; j<4; j++){
+                    positioner.add(new Point(i,j));
+                }
+            }
+        }
+        
+        private void vinst(){
+            ArrayList nuvarande = new ArrayList();
+            
+            for(Button btn : knappar){
+                nuvarande.add((Point) btn.getClientProperty("position"));
+            }
+
+            if(positioner.toString().contentEquals(nuvarande.toString())){
+                System.out.println("Du har Vunnit!");
+            }
+        }
+    }
+
+
             
         
 
