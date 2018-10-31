@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -29,7 +30,6 @@ public class View extends JFrame {
    
     JPanel knappPanel = new JPanel();
     JButton blanda = new JButton("Blanda");
-    int count = 0;
     
 
     JPanel panel = new JPanel();
@@ -54,8 +54,7 @@ public class View extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     checkButton(e);
                     vinst();
-                }
-                
+                }  
             });
             if(j==15){
              
@@ -66,7 +65,7 @@ public class View extends JFrame {
             }
             knappar.add(knapp);
         }
-//        Collections.shuffle(knappar);
+        Collections.shuffle(knappar);
         knappar.add(sistaKnapp);
         vinst();
         blanda.addActionListener(new ActionListener(){
@@ -113,6 +112,7 @@ public class View extends JFrame {
             panel.validate();
         }
         
+        // ska flyttas till model
         private void createPositions(){
             for(int i =0; i<4; i++){
                 for(int j=0; j<4; j++){
@@ -129,7 +129,7 @@ public class View extends JFrame {
             }
 
             if(positioner.toString().contentEquals(nuvarande.toString())){
-                System.out.println("Du har Vunnit!");
+                JOptionPane.showMessageDialog(null,"Grattis, Du har Vunnit!");
             }
         }
         
