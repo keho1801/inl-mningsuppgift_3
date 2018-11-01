@@ -11,6 +11,7 @@ import javax.swing.JButton;
  */
 public class Button extends JButton {
     private boolean sistaKnapp = false;
+    protected int position;
    
     Button(String s){
         this.setText(s);
