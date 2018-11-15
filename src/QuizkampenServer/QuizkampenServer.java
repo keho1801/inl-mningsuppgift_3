@@ -3,7 +3,9 @@
 
 package QuizkampenServer;
 
+import Models.Question;
 import java.io.BufferedReader;
+import QuizkampenKlient.*;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -25,7 +27,7 @@ public class QuizkampenServer {
             PrintWriter outString = new PrintWriter(klientSocket.getOutputStream(), true);
             ) {
             String input;
-            Question q = new Question(null, "123", null, "12332");
+            Question q = new Question("pelle", "123");
             while ((input = in.readLine()) != null) {
                 System.out.println(input);
                 ut.writeObject(q);
