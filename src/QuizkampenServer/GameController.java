@@ -10,7 +10,7 @@ public class GameController {
     private List<Question> questionsInGame = new ArrayList<>();
       
             
-    public GameController() {
+    public GameController(Player playerX, Player playerY) {
         QuestionUtil q = new QuestionUtil();
         q.initializeQuestionDatabase();
         q.shuffleQuestionList();
