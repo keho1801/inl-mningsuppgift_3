@@ -1,9 +1,10 @@
-package QuizkampenKlient;
+package Models;
 
 import java.io.Serializable;
 
 public class Question implements Serializable {
-    private String question;
+    static final long serialVersionUID = 42L;
+    public String question;
     private String answer;
     
     public Question(String question, String answer) {

@@ -1,5 +1,7 @@
 package QuizkampenKlient;
 
+
+import Models.Question;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,7 +16,7 @@ public class QuizkampenKlient {
     public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
         System.out.println("hejhej");
         
-        try (Socket socketToServer = new Socket(InetAddress.getByName("172.20.201.136"), 12345);
+        try (Socket socketToServer = new Socket(InetAddress.getLocalHost(), 12345);
                 PrintWriter out = new PrintWriter(socketToServer.getOutputStream(), true);
                 ObjectInputStream in = new ObjectInputStream(socketToServer.getInputStream());
                 
@@ -27,8 +29,8 @@ public class QuizkampenKlient {
             out.println(fromUser);
             
             while (true){
-                Question fromServer = (Question) in.readObject();
-                System.out.println(fromServer.getCorrectAnswer());
+                Object fromServer = in.readObject();
+                System.out.println(((Question) fromServer).question);
                 System.out.println(userReader.readLine());
                 System.out.println("Välkommen" + fromUser);
                 
