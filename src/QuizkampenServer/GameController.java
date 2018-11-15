@@ -1,5 +1,6 @@
-package QuizkampenKlient;
+package QuizkampenServer;
 
+import QuizkampenKlient.Question;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
