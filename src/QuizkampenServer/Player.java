@@ -1,6 +1,4 @@
-package QuizkampenKlient;
-
-import java.net.Socket;
+package QuizkampenServer;
 
 import java.net.Socket;
 
