@@ -15,11 +15,12 @@ public class QuizkampenServer {
         System.out.println("Tic Tac Toe Server is Running");
         try {
             while (true) {
-                ServerSideGame game = new ServerSideGame();
                 Player playerX 
-                        = new Player(listener.accept(), 'X', game);
+                        = new Player("x", listener.accept());
                 Player playerO 
-                        = new Player(listener.accept(), 'O', game);
+                        = new Player("o", listener.accept());
+                
+                GameController game = new GameController(4);
                 playerX.setOpponent(playerO);
                 playerO.setOpponent(playerX);
                 playerX.start();

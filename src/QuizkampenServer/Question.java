@@ -1,4 +1,4 @@
-package QuizkampenKlient;
+package QuizkampenServer;
 
 import java.io.Serializable;
 

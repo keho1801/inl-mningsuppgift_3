@@ -1,18 +1,20 @@
 package QuizkampenServer;
 
-import QuizkampenKlient.*;
-import java.io.Serializable;
+import java.net.Socket;
 
-public class Player implements Serializable {
+public class Player extends Thread {
     private String name;
+    private Player opponent;
     private int score;
     private int wins;
+    Socket socket;
     
-public Player(String name) {
+public Player(String name, Socket socket) {
     this.name = name;
+    this.socket = socket;
 }
 
-    public String getName() {
+    public String getPlayerName() {
         return name;
     }
 
@@ -30,6 +32,14 @@ public Player(String name) {
 
     public void setWins(int wins) {
         this.wins = wins;
+    }
+
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
+    }
+
+    public Player getOpponent() {
+        return opponent;
     }
     
 }
