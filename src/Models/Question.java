@@ -1,8 +1,9 @@
-package QuizkampenServer;
+package Models;
 
 import java.io.Serializable;
 
 public class Question implements Serializable {
+    static final long serialVersionUID = 42L;
     private String question;
     private String category;
     private String[] answers;

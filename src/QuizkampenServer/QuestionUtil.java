@@ -1,5 +1,6 @@
 package QuizkampenServer;
 
+import Models.Question;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
