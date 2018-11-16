@@ -30,7 +30,7 @@ public class GameController extends Thread {
     private String YstrInput;
     private int numberOfGamesPerRound = 2;
 
-    public GameController() {
+    public GameController() throws IOException {
         q = new QuestionUtil();
         //tar in alla frågor
         q.initializeQuestionDatabase();
