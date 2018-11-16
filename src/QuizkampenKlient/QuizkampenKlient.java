@@ -13,30 +13,25 @@ import java.net.UnknownHostException;
 public class QuizkampenKlient {
     
     public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-        System.out.println("hejhej");
         
-        try (Socket socketToServer = new Socket(InetAddress.getByName("172.20.201.136"), 12345);
+        try (Socket socketToServer = new Socket(InetAddress.getLocalHost(), 12345);
                 PrintWriter out = new PrintWriter(socketToServer.getOutputStream(), true);
                 ObjectInputStream in = new ObjectInputStream(socketToServer.getInputStream());
-                
-                BufferedReader userReader = new BufferedReader(new InputStreamReader(socketToServer.getInputStream()));){
+                ){
             
-            //Question fromServer;
+            Object fromServer;
             String fromUser = "Anna";
-            System.out.println(fromUser);
             
             out.println(fromUser);
             
-            while (true){
-                Object fromServer = in.readObject();
-                System.out.println(((Question) fromServer).getQuestion());
-                System.out.println(userReader.readLine());
-                System.out.println("Välkommen" + fromUser);
-                
-                System.out.println("hej");
-                //Sätter frågan och knapparna
+            while ((fromServer = in.readObject()) != null){
+                if (((Question) fromServer).getQuestion() == null){
+                    System.out.println("Välkommen " + fromUser);
+                } else {
+                    System.out.println(((Question) fromServer).getQuestion());
+                    //Sätter frågan och knapparna
                 }
-            
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
