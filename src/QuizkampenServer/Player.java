@@ -7,11 +7,13 @@ public class Player extends Thread {
     private Player opponent;
     private int score;
     private int wins;
+    private GameController game;
     Socket socket;
     
-public Player(String name, Socket socket) {
+public Player(Socket socket, String name, GameController game) {
     this.name = name;
     this.socket = socket;
+    this.game = game;
 }
 
     public String getPlayerName() {

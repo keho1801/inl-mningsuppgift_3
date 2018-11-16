@@ -1,5 +1,6 @@
 package QuizkampenServer;
 
+import Models.Question;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,9 +9,9 @@ public class QuestionUtil {
     private List<Question> questionsDatabase = new ArrayList<>();
     private List<Question> questionsInGame = new ArrayList<>();
     String[] category = { "Biologi", "Sport och fritid", "Kultur och musik", "Vetenskap" };
-    int nrOfQuestionsInGame = 4;
     
     public QuestionUtil() {
+        
     }
     
     public void initializeQuestionDatabase() {
@@ -31,27 +32,31 @@ public class QuestionUtil {
         
         String[] q6 = { "Usasin Bolt", "Ben Johnson", "Michael Johnson", "Tyson Gay" };
         questionsDatabase.add(new Question("Vem springer snabbast?", q6, category[1]));
-        
+     
     }
     
     public void shuffleQuestionList() {
         Collections.shuffle(questionsDatabase);
-    }
-    
-    public List<Question> currentGameQuestions() {
-        for (int i = 0; i < nrOfQuestionsInGame; i++) {
-            questionsInGame.add(questionsDatabase.get(i));
-            questionsDatabase.remove(i);
-        }
-        return questionsInGame;
     }
 
     public List<Question> getQuestionsDatabase() {
         return questionsDatabase;
     }
 
-    public List<Question> getQuestionsInGame() {
-        return questionsInGame;
+    public List<Question> getQuestionsInGame(int nrOfQuestionsInGame,String Category) {
+        List<Question> nullListDatabase = new ArrayList<>();
+        for (int i = 0; i <questionsDatabase.size(); i++) {
+            if(questionsDatabase.get(i) != null){
+                if(questionsDatabase.get(i).getCategory().equalsIgnoreCase(Category)){
+                    questionsInGame.add(questionsDatabase.get(i));
+                    questionsDatabase.get(i).setquestionsNull();
+                    if(questionsInGame.size() == nrOfQuestionsInGame){
+                        return questionsInGame;
+                    }              
+                }
+                        
+            }
+        }
+        return nullListDatabase;
     }
-
 }
