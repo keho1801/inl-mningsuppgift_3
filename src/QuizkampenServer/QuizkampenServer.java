@@ -20,7 +20,7 @@ public class QuizkampenServer {
                 Player playerO 
                         = new Player("o", listener.accept());
                 
-                GameController game = new GameController(4);
+                GameController game = new GameController();
                 playerX.setOpponent(playerO);
                 playerO.setOpponent(playerX);
                 playerX.start();

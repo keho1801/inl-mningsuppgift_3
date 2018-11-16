@@ -12,20 +12,43 @@ public class GameController {
             
     public GameController() {
         QuestionUtil q = new QuestionUtil();
+        //tar in alla frågor
         q.initializeQuestionDatabase();
+        //shufflar listan för frågorna
         q.shuffleQuestionList();
         //läs in antal frågor/ronder från properties filen
         questionsInGame = q.getQuestionsInGame();
         
-        String [] Answer = questionsInGame.get(0).getAnswers();
+        //properties fil size = p
+        
+        int p = 0; 
+        int i = 0;
+        String [] Answer = new String[p];
+        String correctAnswer = "";
+        
+        //skapa metod reutnera en bool för svar.
+        
+        for(Question e: questionsInGame){
+            Answer = questionsInGame.get(i).getAnswers();
+            correctAnswer = Answer[p];
+            if(instrom == correctAnswer){
+                
+            }
+            System.out.println(e);
+            i++;
+            p++;
+        }
         
         //rätt svar innan shuffle, svar ligger på första plats.
-        String correctAnswer = Answer[0];
-        //shufflar svaren.
+        //String correctAnswer = Answer[p];
+        
+        //shufflar svaren i string[].
         Collections.shuffle(Arrays.asList(Answer));
         
-        //skickar frågorna till klienterna
+        //skickar frågorna till klienterna och svaren shufflade.
         
+        //jämför svar med rättsvar
+        if(instrom == correctAnswer)
         
         
         }
