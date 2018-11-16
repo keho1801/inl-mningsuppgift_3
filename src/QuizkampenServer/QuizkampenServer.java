@@ -1,6 +1,5 @@
 /*
  */
-
 package QuizkampenServer;
 
 import Models.Question;
@@ -18,45 +17,34 @@ import java.net.Socket;
  * @author kenny
  */
 public class QuizkampenServer {
+
     public static void main(String[] args) throws Exception {
         try (
-            ServerSocket serverSocket = new ServerSocket(12345);
-            Socket klientSocket = serverSocket.accept();
-            ObjectOutputStream ut = new ObjectOutputStream(klientSocket.getOutputStream());
-            BufferedReader in = new BufferedReader(new InputStreamReader(klientSocket.getInputStream()));
-            PrintWriter outString = new PrintWriter(klientSocket.getOutputStream(), true);
-            ) {
+                ServerSocket serverSocket = new ServerSocket(12345);
+                Socket klientSocket = serverSocket.accept();
+                ObjectOutputStream out = new ObjectOutputStream(klientSocket.getOutputStream());
+                BufferedReader in = new BufferedReader(new InputStreamReader(klientSocket.getInputStream()));
+                PrintWriter outString = new PrintWriter(klientSocket.getOutputStream(), true);) {
+
             String input;
-            Question q = new Question("pelle", "123");
             while ((input = in.readLine()) != null) {
-                System.out.println(input);
-                ut.writeObject(q);
-                outString.println("Hejhej");
+                GameController game = new GameController();
                 
+                input = in.readLine();
+                outString.println("Spelare " + input + " uppkopplad");
+                Player playerX = new Player(serverSocket.accept(), input, game);
+                
+                input = in.readLine();
+                outString.println("Spelare " + input + " uppkopplad");
+                Player playerO = new Player(serverSocket.accept(), input, game);
+                
+                game.setPlayers(playerX, playerO);
+                playerX.setOpponent(playerO);
+                playerO.setOpponent(playerX);
+                game.start();
 
             }
-
         }
-        
-//            String input;
-//            while ((input = in.readLine()) != null) {
-////                ServerSideGame game = new ServerSideGame();
-////                Player playerX 
-////                        = new Player(listener.accept(), 'X', game);
-////                Player playerO 
-////                        = new Player(listener.accept(), 'O', game);
-////                playerX.setOpponent(playerO);
-////                playerO.setOpponent(playerX);
-////                playerX.start();
-////                playerO.start();
-//
-//                String namn = in.readLine();
-//                System.out.println(namn);
-//                Question q1 = new Question(null, "123", null, "12332");
-//                ut.writeObject((Object) q1);
-            }
-        
         }
-    
 
-
+    }
