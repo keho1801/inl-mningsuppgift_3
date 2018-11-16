@@ -29,7 +29,7 @@ public class QuizkampenKlient {
             
             while (true){
                 Object fromServer = in.readObject();
-                System.out.println(((Question) fromServer).question);
+                System.out.println(((Question) fromServer).getQuestion());
                 System.out.println(userReader.readLine());
                 System.out.println("Välkommen" + fromUser);
                 
