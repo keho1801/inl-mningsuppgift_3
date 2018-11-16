@@ -2,6 +2,7 @@
  */
 package QuizkampenServer;
 
+import Models.Player;
 import Models.Question;
 import java.io.BufferedReader;
 import QuizkampenKlient.*;
