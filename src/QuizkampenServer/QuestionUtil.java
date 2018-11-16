@@ -1,17 +1,34 @@
 package QuizkampenServer;
 
 import Models.Question;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 public class QuestionUtil {
     private List<Question> questionsDatabase = new ArrayList<>();
     private List<Question> questionsInGame = new ArrayList<>();
     String[] category = { "Samtid", "Sport och fritid", "Kultur och musik", "Vetenskap & historia" };
+    int nrOfQuestionsInGame;
+    int nrOfQuestionsPerRound;
     
-    public QuestionUtil() {
-        
+    public QuestionUtil() throws FileNotFoundException, IOException {
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("src/QuestionSettings.properties"));
+            nrOfQuestionsInGame = Integer.parseInt(properties.getProperty("questionsPerGame"));
+            nrOfQuestionsPerRound = Integer.parseInt(properties.getProperty("questionsPerRound"));   
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File Not Found: " + e.getMessage());
+        }
+        catch (IOException e) {
+            System.out.println("IOException : " + e.getMessage());
+        }
     }
     
     public void initializeQuestionDatabase() {
@@ -68,4 +85,17 @@ public class QuestionUtil {
         }
         return questionsInGame;
     }
+
+    public int getNrOfQuestionsInGame() {
+        return nrOfQuestionsInGame;
+    }
+
+    public int getNrOfQuestionsPerRound() {
+        return nrOfQuestionsPerRound;
+    }
+
+    public String[] getCategory() {
+        return category;
+    }
+    
 }
