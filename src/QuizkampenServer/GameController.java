@@ -8,8 +8,11 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameController extends Thread {
     private List<Question> questionsInGame = new ArrayList<>();
@@ -21,6 +24,7 @@ public class GameController extends Thread {
     private ObjectOutputStream Xoutput;
     private BufferedReader Yinput;
     private ObjectOutputStream Youtput;
+    private int state;
     private QuestionUtil q;
     private String XstrInput;
     private String YstrInput;
@@ -32,14 +36,10 @@ public class GameController extends Thread {
         q.initializeQuestionDatabase();
         //shufflar listan för frågorna
         q.shuffleQuestionList();
-        //läs in antal frågor/ronder från properties filen
-        
-        Random random = new Random(4);
-        String[] randomCategory = q.getCategory();
-        questionsInGame = q.getQuestionsInGame(numberOfGamesPerRound,randomCategory[random.nextInt()]);
+        //läs in antal frågor/ronder från properties filen 
+        questionsInGame = q.getQuestionsInGame(numberOfGamesPerRound,"Vetenskap");
         }
-    
-    public void setPlayers(Player X, Player Y){
+public void setPlayers(Player X, Player Y){
         this.playerX = X;
         this.playerY = Y;
         this.Xsocket = X.socket;
@@ -58,6 +58,7 @@ public class GameController extends Thread {
     @Override
     public void run() {
         try{
+        state = 0;
         int Xscore = 0;
         int Yscore = 0;
         while(true){
@@ -74,7 +75,7 @@ public class GameController extends Thread {
                             }
                         }
                         if((YstrInput = Yinput.readLine())!=null){
-                            if(questionsInGame.get(y).getAnswers()[0].equals(YstrInput)){
+                            if(questionsInGame.get(y).getAnswers()[0].equals(XstrInput)){
                                     playerY.setScore(Yscore++);   
                             }
 
@@ -93,3 +94,6 @@ public class GameController extends Thread {
     }
 }
 }
+
+
+
