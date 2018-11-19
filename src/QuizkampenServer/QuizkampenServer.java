@@ -28,7 +28,7 @@ public class QuizkampenServer {
                 PrintWriter outString = new PrintWriter(klientSocket.getOutputStream(), true);) {
 
             String input;
-            Question q = new Question("pelle", null, "123");
+//            Question q = new Question("pelle", null, "123");
             while ((input = in.readLine()) != null) {
                 GameController game = new GameController();
                 
