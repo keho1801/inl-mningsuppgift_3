@@ -2,6 +2,7 @@
  */
 package QuizkampenServer;
 
+import Models.Player;
 import Models.Question;
 import java.io.BufferedReader;
 import QuizkampenKlient.*;
@@ -34,7 +35,7 @@ public class QuizkampenServer {
                 playerX.setOpponent(playerO);
                 playerY.setOpponent(playerX);
                 game.start();
-
+                
             }
             }finally{
                 serverSocket.close();
