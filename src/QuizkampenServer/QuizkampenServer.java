@@ -19,36 +19,27 @@ import java.net.Socket;
 public class QuizkampenServer {
 
     public static void main(String[] args) throws Exception {
-        try (
-                ServerSocket serverSocket = new ServerSocket(12345);
-                Socket klientSocket = serverSocket.accept();
-                ObjectOutputStream out = new ObjectOutputStream(klientSocket.getOutputStream());
-                BufferedReader in = new BufferedReader(new InputStreamReader(klientSocket.getInputStream()));
-                PrintWriter outString = new PrintWriter(klientSocket.getOutputStream(), true);) {
 
-            String input;
-<<<<<<< HEAD
-=======
-            Question q = new Question("pelle", null, "123");
->>>>>>> 2a0cb4810ef2503c288a26bf9cfcd4de5fd0321a
-            while ((input = in.readLine()) != null) {
+            ServerSocket serverSocket = new ServerSocket(12345);
+            
+            try{
+                while (true) {
                 GameController game = new GameController();
-                
-                input = in.readLine();
-                outString.println("Spelare " + input + " uppkopplad");
-                Player playerX = new Player(serverSocket.accept(), input, game);
-                
-                input = in.readLine();
-                outString.println("Spelare " + input + " uppkopplad");
-                Player playerO = new Player(serverSocket.accept(), input, game);
+
+                Player playerX = new Player(serverSocket.accept(), "PlayerX", game);
+
+                Player playerY = new Player(serverSocket.accept(), "PlayerY", game);
                 
                 game.setPlayers(playerX, playerO);
                 playerX.setOpponent(playerO);
-                playerO.setOpponent(playerX);
+                playerY.setOpponent(playerX);
                 game.start();
 
             }
-        }
+            }finally{
+                serverSocket.close();
+            }
+        
         }
 
     }
