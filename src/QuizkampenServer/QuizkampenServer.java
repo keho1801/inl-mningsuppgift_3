@@ -31,8 +31,8 @@ public class QuizkampenServer {
 
                 Player playerY = new Player(serverSocket.accept(), "PlayerY", game);
                 
-                game.setPlayers(playerX, playerO);
-                playerX.setOpponent(playerO);
+                game.setPlayers(playerX, playerY);
+                playerX.setOpponent(playerY);
                 playerY.setOpponent(playerX);
                 game.start();
                 
