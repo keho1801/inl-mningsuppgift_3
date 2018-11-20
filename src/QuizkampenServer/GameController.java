@@ -29,7 +29,7 @@ public class GameController extends Thread {
     private String YstrInput;
     private int numberOfGamesPerRound = 2;
 
-    public GameController() throws IOException {
+    public GameController(Player X, Player Y, Socket socketX, Socket socketY) throws IOException {
         q = new QuestionUtil();
         //tar in alla frågor
         q.initializeQuestionDatabase();
@@ -37,12 +37,10 @@ public class GameController extends Thread {
         q.shuffleQuestionList();
         //läs in antal frågor/ronder från properties filen 
         questionsInGame = q.getQuestionsInGame(numberOfGamesPerRound,"Vetenskap");
-        }
-public void setPlayers(Player X, Player Y){
         this.playerX = X;
         this.playerY = Y;
-        this.Xsocket = X.socket;
-        this.Ysocket = Y.socket;
+        this.Xsocket = socketX;
+        this.Ysocket = socketY;
         try{
             Xinput = new BufferedReader(new InputStreamReader(Xsocket.getInputStream()));
             Xoutput = new ObjectOutputStream(Xsocket.getOutputStream());
@@ -51,7 +49,8 @@ public void setPlayers(Player X, Player Y){
         }catch(IOException e){
             System.out.println("något gick fel" + e);
         }
-}
+
+    }
 public void sendQuestions(ObjectOutputStream output) throws IOException{
     for(Question q: questionsInGame){
         output.writeObject(q);
@@ -71,6 +70,15 @@ public void checkQuestions(BufferedReader input,Player player) throws IOExceptio
     @Override
     public void run() {
         try{
+            
+            playerX.setName(Xinput.readLine());
+            playerY.setName(Yinput.readLine());
+            
+            Xoutput.writeObject(playerX);
+//            Xoutput.writeObject(playerX.getOpponent());
+            Youtput.writeObject(playerY);
+//            Youtput.writeObject(playerY.getOpponent());
+            
         while(true){
 //            
 //            sendQuestions(Xoutput);
