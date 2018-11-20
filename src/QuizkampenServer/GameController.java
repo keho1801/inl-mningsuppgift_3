@@ -53,29 +53,49 @@ public class GameController extends Thread {
             System.out.println("något gick fel" + e);
         }
 }
-
-
+public void sendQuestions(ObjectOutputStream output) throws IOException{
+    for(Question q: questionsInGame){
+        output.writeObject(q);
+    }
+}
+public void checkQuestions(BufferedReader input,Player player) throws IOException{
+    String answer;
+    int score = 0;
+    for(Question q: questionsInGame){
+        if((answer = input.readLine())!= null){
+            if(q.getAnswers()[0].equals(answer)){
+                player.setScore(player.getScore()+1);
+            }
+        }
+    }
+}
     @Override
     public void run() {
         try{
-        int Xscore = 0;
-        int Yscore = 0;
         while(true){
+//            
+//            sendQuestions(Xoutput);
+//            sendQuestions(Youtput);
+//            
+//            checkQuestions(Xinput,playerX);
+//            checkQuestions(Yinput,playerY);
+//            
+            
                 for(int i=0; i<numberOfGamesPerRound; i++){
                     Xoutput.writeObject(questionsInGame.get(0));
                     Xoutput.writeObject(questionsInGame.get(1));
                     Youtput.writeObject(questionsInGame.get(0));
                     Youtput.writeObject(questionsInGame.get(1));
                     
-                    for(int y= 0; y<2; y++){   
+                    for(int j= 0; j<2; j++){   
                         if((XstrInput = Xinput.readLine())!=null){
-                            if(questionsInGame.get(y).getAnswers()[0].equals(XstrInput)){
-                                playerX.setScore(Xscore++);   
+                            if(questionsInGame.get(j).getAnswers()[0].equals(XstrInput)){
+                                playerX.setScore(playerX.getScore()+1);   
                             }
                         }
                         if((YstrInput = Yinput.readLine())!=null){
-                            if(questionsInGame.get(y).getAnswers()[0].equals(YstrInput)){
-                                    playerY.setScore(Yscore++);   
+                            if(questionsInGame.get(j).getAnswers()[0].equals(YstrInput)){
+                                    playerY.setScore(playerY.getScore()+1);   
                             }
 
                         }
